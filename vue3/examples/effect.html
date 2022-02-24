@@ -1,0 +1,34 @@
+<!--
+ * @Author: linbin
+ * @Date: 2021-12-31 14:56:06
+ * @LastEditTime: 2022-01-04 16:51:19
+ * @LastEditors: linbin
+ * @Description: 
+ * @FilePath: /studyVue3/examples/effect.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app"></div>
+		<script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
+		<script>
+			let { effect, reactive, ref } = VueReactivity
+			let state = reactive({ name: 'ob', age: 28, others: [1,2,3]})
+            let refData = ref('xxx')
+            console.log(refData)
+			effect(() => {
+                console.log(11111, state)
+				app.innerHTML = state.name
+			})
+            setTimeout(() => {
+               Reflect.deleteProperty(state, 'name')
+            }, 2000);
+		</script>
+	</body>
+</html>
