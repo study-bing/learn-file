@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-10 13:32:43
- * @LastEditTime: 2021-12-10 16:10:56
- * @LastEditors: linbin
- * @Description: myPromise
- * @FilePath: /study/练习/myPromise.js
+ * @LastEditTime: 2022-03-29 13:40:05
+ * @LastEditors: linBin
+ * @Description: Promise
+ * @FilePath: /learn-file/practice/myPromise.js
  */
 // promise的三个状态
 const PENDING = 'PENDING' //等待
@@ -128,62 +128,49 @@ class Promise {
 			reject(val)
 		})
 	}
-	static all(list = []) {
-		if (Array.isArray(list)) {
-			return new Promise((resolve, reject) => {
-				let count = 0
-				let result = []
-				list.forEach((fn, index) => {
-					if (fn instanceof Promise) {
-						fn.then(res => {
-							result[index] = res
-							count++
-							if (count === list.length) {
-								resolve(result)
-							}
-						}, reject)
-					} else {
-						result[index] = fn
-						count++
-					}
-				})
-			})
-		} else {
-			throw new TypeError('must be an array')
-		}
-	}
-	static race(list = []) {
-		if (Array.isArray(list)) {
-			return new Promise((resolve, reject) => {
-				let isReturn = false
-				list.forEach((fn, index) => {
-					if (fn instanceof Promise) {
-						fn.then(
-							res => {
-								if (!isReturn) {
-									resolve(res)
-									isReturn = true
-								}
-							},
-							e => {
-								if (!isReturn) {
-									reject(e)
-									isReturn = true
-								}
-							}
-						)
-					} else {
-						if (!isReturn) {
-							resolve(fn)
-							isReturn = true
-						}
-					}
-				})
-			})
-		} else {
-			throw new TypeError('must be an array')
-		}
-	}
+	  //静态方法
+      static all(promiseArr) {
+        let result = [];
+        //声明一个计数器 每一个promise返回就加一
+        let count = 0;
+        return new Promise((resolve, reject) => {
+          for (let i = 0; i < promiseArr.length; i++) {
+          //这里用 Promise.resolve包装一下 防止不是Promise类型传进来
+            Promise.resolve(promiseArr[i]).then(
+              (res) => {
+                //这里不能直接push数组  因为要控制顺序一一对应(感谢评论区指正)
+                result[i] = res;
+                count++;
+                //只有全部的promise执行成功之后才resolve出去
+                if (count === promiseArr.length) {
+                  resolve(result);
+                }
+              },
+              (err) => {
+                reject(err);
+              }
+            );
+          }
+        });
+      }
+      //静态方法
+      static race(promiseArr) {
+        return new Promise((resolve, reject) => {
+          for (let i = 0; i < promiseArr.length; i++) {
+            Promise.resolve(promiseArr[i]).then(
+              (res) => {
+                //promise数组只要有任何一个promise 状态变更  就可以返回
+                resolve(res);
+              },
+              (err) => {
+                reject(err);
+              }
+            );
+          }
+        });
+      }
+    }
+    
 }
 function isPromise(val) {
     if (
