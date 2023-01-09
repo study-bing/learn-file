@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-08-24 10:38:12
- * @LastEditTime: 2021-09-02 15:50:54
- * @LastEditors: linbin
+ * @LastEditTime: 2023-01-04 14:07:20
+ * @LastEditors: linBin
  * @Description: updateChildren
- * @FilePath: /vDom/src/mysnabbdom/updateChildren.js
+ * @FilePath: /learn-file/vue2/vDom/src/mysnabbdom/updateChildren.js
  */
 import createElement from "./createElement"
 import patchVnode from "./patchVnode"
@@ -106,8 +106,8 @@ export default function updateChildren(parentElm, oldCh, newCh) {
             for (let i = newStartIdx; i <= newEndIdx; i++) {
                 // insertBefore 可以自动识别 null，如果是 null 就会自动排到队尾去。和appendChild是一致的
                 // newCh[i] 还不是真正的DOM，所以需要此处需要调用createElement
-                console.log(oldCh[oldStartIdx]);
                 let  before = oldCh[oldStartIdx + 1] == null ? null : oldCh[oldStartIdx + 1].elm
+                console.log(parentElm, before)
                 parentElm.insertBefore(
                     createElement(newCh[i]),
                     before

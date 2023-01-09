@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-06 09:36:05
- * @LastEditTime: 2021-12-06 10:51:44
- * @LastEditors: linbin
+ * @LastEditTime: 2022-12-19 16:43:53
+ * @LastEditors: linBin
  * @Description:
- * @FilePath: /study/myVue/vue/ast/index.js
+ * @FilePath: /learn-file/vue2/testProject/src/ast/index.js
  */
 {
 	/* <div>
@@ -49,7 +49,7 @@ import parse from './parse'
 
 const templateString = `
 <div>
-    <h3 class="box" title="标题" data-type="3">你好</h3>
+    <h3 class="box bbb" title="标题" data-type="3">你好</h3>
     <ul>
         <li>A</li>
         <li>B</li>
@@ -59,4 +59,4 @@ const templateString = `
 `
 // console.log('输入的模板字符串', templateString)
 const ast = parse(templateString)
-// console.log('生成的AST\n', ast)
+console.log('生成的AST\n', ast)

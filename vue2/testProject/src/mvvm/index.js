@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-02 15:01:14
- * @LastEditTime: 2021-12-24 13:59:45
- * @LastEditors: linbin
+ * @LastEditTime: 2022-12-23 17:30:45
+ * @LastEditors: linBin
  * @Description: 双向绑定
- * @FilePath: /study/myVue/vue/mvvm/index.js
+ * @FilePath: /learn-file/vue2/testProject/src/mvvm/index.js
  */
 
 // !递归思想： observe(obj) => 看看obj有没有__ob__属性 => 没有情况下 new Observer()产生实例，并添加到__ob__上 => 遍历下一层属性逐个defineReactive => observe(obj)
@@ -19,7 +19,7 @@ let obj = {
 	}
 }
 observe(obj)
-console.log(obj);
+// console.log(obj);
 new Watcher(obj, 'a.b.c', val => {
 })
 // obj.a.b.c = 222

@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-30 17:10:09
- * @LastEditTime: 2022-01-04 16:45:48
- * @LastEditors: linbin
+ * @LastEditTime: 2023-01-06 10:29:05
+ * @LastEditors: linBin
  * @Description: 
- * @FilePath: /studyVue3/packages/reactivity/src/effect.ts
+ * @FilePath: /learn-file/vue3/packages/reactivity/src/effect.ts
  */
 import { isArray, isIntegerKey } from "@vue/share";
 import { TriggerOpTypes } from './operators';
@@ -82,7 +82,6 @@ export function trigger(target, type, key?, newValue?, oldValue?) {
             }
         })
     } else {
-        // 可能是对象
         if (key !== undefined) {
             addEffect(depsMap.get(key))
         }

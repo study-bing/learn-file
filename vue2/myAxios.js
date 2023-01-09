@@ -1,17 +1,17 @@
 /*
  * @Author: linbin
  * @Date: 2021-11-18 14:07:37
- * @LastEditTime: 2021-11-19 13:31:03
- * @LastEditors: linbin
+ * @LastEditTime: 2022-12-21 16:58:34
+ * @LastEditors: linBin
  * @Description: myAxios
- * @FilePath: /study/myaxios/myAxios.js
+ * @FilePath: /learn-file/vue2/myAxios.js
  */
 
 //  构造函数
 function MyAxios(config) {
 	// 初始化
 	this.defaults = config
-	this.intercepters = {
+	this.interceptors = {
 		request: new InterceptorManager(),
 		response: new InterceptorManager()
 	}
@@ -27,11 +27,11 @@ MyAxios.prototype.request = function (config) {
 	}
 	let chain = [dispatchRequest, undefined] // undefined为填充值，当做promise的reject
 	// 执行函数的前面，请求拦截器压入栈
-	this.intercepters.request.handles.forEach(request => {
+	this.interceptors.request.handles.forEach(request => {
 		chain.unshift(request.fulfilled, request.reject)
 	})
 	// 执行的函数后面，返回拦截器加入栈
-	this.intercepters.response.handles.forEach(response => {
+	this.interceptors.response.handles.forEach(response => {
 		chain.push(response.fulfilled, response.reject)
 	})
 	console.log(config)

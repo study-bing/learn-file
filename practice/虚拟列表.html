@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                width: 280px;
+                height: 500px;
+                margin: 50px auto;
+                border: 1px solid #ccc;
+                overflow: auto;
+            }
+
+            .contentBox {
+                position: relative;
+            }
+
+            .cell {
+                position: absolute;
+                left: 0;
+                line-height: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="container">
+                <div class="contentBox" :style="{height: contentBoxHeight}">
+                    <p
+                        ref="cell"
+                        class="cell"
+                        v-for="(item, index) in showList"
+                        :key="index"
+                        :data-index="item.index"
+                        :style="{top: positionData[item.index].top + 'px'}"
+                    >
+                        {{item.data}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        window.onload = function () {
+            var vue = new Vue({
+                el: "#app",
+                data: {
+                    // 全部数据量
+                    list: new Array(1000).fill(0).map((item, index) => {
+                        // 显示的内容随机重复1-30次，模拟动态高
+                        return ("内容" + (index + 1)).repeat(
+                            Math.floor(Math.random() * 30) + 1
+                        )
+                    }),
+                    // 展示的数据
+                    showList: [
+                        // {
+                        //   index,  // 位置索引
+                        //   data: '暂无数据'
+                        // }
+                    ],
+                    // 每行高度（预估高度）
+                    cellHeight: 50,
+                    // 可视框显示的数据量
+                    showCount: 0,
+                    // 存储每一项的位置信息
+                    positionData: [
+                        // {
+                        //   index: 0,  // 位置索引
+                        //   top: 0, // 距离顶部的位置
+                        //   height: 0,  // 当前项的高度
+                        //   // 顶部的位置 + 当前项的高度 = 滚动盒子应用的高度
+                        //   boxHeight: 0
+                        // }
+                    ],
+                },
+                computed: {
+                    // 需要滚动的内容高度
+                    contentBoxHeight() {
+                        return (
+                            this.positionData[this.positionData.length - 1]
+                                ?.boxHeight + "px"
+                        )
+                    },
+                },
+                methods: {
+                    // 初始化基本参数
+                    initData() {
+                        let containerDom = document.querySelector(".container")
+                        // 盒子高度
+                        let containerDomHeight = containerDom.clientHeight
+                        // 可视框需要显示的数据量
+                        this.showCount = Math.ceil(
+                            containerDomHeight / this.cellHeight
+                        )
+
+                        // 预估的位置信息
+                        this.positionData = this.list.map((item, index) => {
+                            return {
+                                index: index,
+                                top: index * this.cellHeight,
+                                height: this.cellHeight,
+                                // 当前项为最后一条数据，滚动盒子的预估高度
+                                // top值加上本身的高度，就能得知滚动盒子的预估高度
+                                // boxHeight: index * this.cellHeight + this.cellHeight
+                                boxHeight: (index + 1) * this.cellHeight,
+                            }
+                        })
+
+                        // 实现虚拟滚动
+                        this.initScrollLoad(containerDom)
+                        containerDom.onscroll = () => {
+                            this.initScrollLoad(containerDom)
+                        }
+                    },
+                    // 实现虚拟滚动
+                    initScrollLoad(containerDom) {
+                        // 滚动出去的距离
+                        let scrollTop = containerDom.scrollTop
+                        // 可视区域第一行索引
+                        let startIndex = Math.max(
+                            this.getStartIndex(scrollTop) - 2,
+                            0
+                        )
+                        // 可视区域最后一行索引
+                        let endIndex = Math.min(
+                            startIndex + this.showCount + 4,
+                            this.list.length
+                        )
+
+                        // 获取需要渲染的数据
+                        this.showList = []
+                        for (let i = startIndex; i < endIndex; i++) {
+                            this.showList.push({
+                                data: this.list[i],
+                                index: this.positionData[i].index,
+                            })
+                        }
+                        this.$nextTick(this.updated)
+                    },
+                    // 获取可视区域第一行索引
+                    getStartIndex(scrollTop) {
+                        // 暴力搜索
+                        // let startIndex = this.positionData.findIndex(item => {
+                        //   return item.boxHeight > scrollTop
+                        // })
+                        // 二分查找
+                        let left = 0,
+                            right = this.positionData.length - 1,
+                            res = right
+                        while (left < right) {
+                            let mid = Math.floor((right - left) / 2) + left
+                            if (
+                                this.positionData[mid].boxHeight === scrollTop
+                            ) {
+                                // console.log(mid)
+                                return mid + 1
+                            } else if (
+                                this.positionData[mid].boxHeight > scrollTop
+                            ) {
+                                res = Math.min(mid, res)
+                                right = right - 1
+                            } else if (
+                                this.positionData[mid].boxHeight < scrollTop
+                            ) {
+                                left = mid + 1
+                            }
+                        }
+                        return res
+                    },
+                    // 等预估的位置信息渲染后，更新实际的信息
+                    updated() {
+                        let cellNode = this.$refs.cell
+                        cellNode.forEach((node) => {
+                            // 实际高度
+                            let height = node.getBoundingClientRect().height
+                            let index = +node.dataset.index
+                            let position = this.positionData[index]
+                            let cha = height - position.height
+                            // console.log(cha)
+                            // 当前node的实际高度，跟预估高度不一致
+                            if (cha) {
+                                // 更新当前node的位置信息
+                                this.positionData[index].height = height
+                                this.positionData[index].boxHeight += cha
+                                for (
+                                    let i = index + 1;
+                                    i < this.positionData.length;
+                                    i++
+                                ) {
+                                    // 更新当前node后面所有项的位置信息
+                                    this.positionData[i].top =
+                                        this.positionData[i - 1].boxHeight
+                                    this.positionData[i].boxHeight += cha
+                                }
+                            }
+                        })
+                    },
+                },
+                mounted() {
+                    // 初始化
+                    this.initData()
+                },
+            })
+        }
+    </script>
+</html>

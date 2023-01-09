@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-02 15:25:56
- * @LastEditTime: 2021-12-03 13:45:48
- * @LastEditors: linbin
+ * @LastEditTime: 2022-12-23 13:58:18
+ * @LastEditors: linBin
  * @Description: 数组的数据劫持
- * @FilePath: /study/myVue/mustache/mvvm/array.js
+ * @FilePath: /learn-file/vue2/mvvm/array.js
  */
 
 import { def } from './utils'
@@ -27,7 +27,7 @@ methodsChange.forEach(methodName => {
 			let inserted = []
 			switch (methodName) {
 				case 'push':
-				case 'shift':
+				case 'unshift':
 					inserted = args
 					break
 				case 'splice':

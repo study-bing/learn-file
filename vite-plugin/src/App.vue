@@ -12,6 +12,7 @@
 
 <script>
 import { ref, computed, getCurrentInstance } from 'vue'
+import myExample from 'virtual-module'
 export default {
 	name: 'App',
 	setup() {

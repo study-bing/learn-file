@@ -1,85 +1,28 @@
-/*
- * @Author: linbin
- * @Date: 2021-01-11 20:33:04
- * @LastEditTime: 2021-06-22 13:18:38
- * @LastEditors: linbin
- * @Description:
- * @FilePath: /study/promise/test.js
- */
-let Mypromise = require("./then")
-// let testPromise = new Mypromise((resolve, reject) => {
-//     setTimeout(() => {
-//         resolve(123)
-//     }, 1000)
-// })
-// testPromise.then((res) => {
-//     console.log(res)
-// })
-// testPromise.then((res) => {
-//     setTimeout(() => {
-//         console.log(res)
-//     }, 1000)
-// })
-let promise = new Mypromise((resolve, reject) => {
-    resolve(1)
-    // setTimeout(() => {
-    //     new Promise((resolve1, reject2) => {
-    //         resolve(123)
-    //     })
-    // }, 0)
-})
-let p3 = promise
-    .then(
-        (res) => {
-            return {
-                then: function(){
-                    console.log('then');
-                }
+function arrayToTree(list) {
+    let result = []
+    let itemMap = {}
+    list.forEach((el) => {
+        itemMap[el.id] = {
+            ...el,
+            children: [],
+        }
+    })
+    list.forEach((el) => {
+        if (el.pid === 0) {
+            result.push(itemMap[el.id])
+        } else {
+            if (itemMap[el.pid]) {
+                itemMap[el.pid].children.push(itemMap[el.id])
             }
-        },
-        (err) => {
-            console.log(err)
         }
-    )
-    .then(
-        (res) => {
-            console.log('res', res);
-            return 333333
-        },
-        (err) => {
-            console.log(err)
-        }
-    )
-let p2 = promise.then(
-    (res) => {
-        return p3
-    },
-    (err) => {
-        console.log(err)
-    }
-)
-// .then(
-//     (res) => {
-//         console.log(231)
-//         console.log(res)
-//         return 1
-//     },
-//     (err) => {
-//         console.log(555)
-//         console.log(err)
-//     }
-// )
-// p2.then(
-//     (res) => {
-//         console.log("res", res)
-//     },
-//     (err) => {
-//         console.log(err)
-//     }
-// )
-setTimeout(() => {
-    console.log("setTimeout")
-}, 0)
-Mypromise.resolve().then(() => {
-    console.log("Promise")
-})
+    })
+    return result
+}
+let arr = [
+    { id: 1, name: "部门1", pid: 0 },
+    { id: 2, name: "部门2", pid: 1 },
+    { id: 3, name: "部门3", pid: 1 },
+    { id: 4, name: "部门4", pid: 3 },
+    { id: 5, name: "部门5", pid: 4 },
+]
+console.log(arrayToTree(arr))

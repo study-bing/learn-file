@@ -104,7 +104,7 @@ var VueReactivity = (function () {
                 addEffect(depsMap.get(key));
             }
             switch (type) {
-                case 0 /* ADD */:
+                case 0 /* TriggerOpTypes.ADD */:
                     // !修改数组中的索引, 比如p = [1,2,3]  p[100] = 1
                     if (isArray(target) && isIntegerKey(key)) {
                         addEffect(depsMap.get('length'));
@@ -118,10 +118,10 @@ var VueReactivity = (function () {
     /*
      * @Author: linbin
      * @Date: 2021-12-29 17:03:00
-     * @LastEditTime: 2022-01-04 16:52:00
+     * @LastEditTime: 2022-02-17 17:59:29
      * @LastEditors: linbin
      * @Description: 代理的事件
-     * @FilePath: /studyVue3/packages/reactivity/src/baseHandlers.ts
+     * @FilePath: /study/studyVue3/packages/reactivity/src/baseHandlers.ts
      */
     // !考虑是否只读和深度
     function createGetter(isReadonly = false, isShallow = false) {
@@ -129,12 +129,12 @@ var VueReactivity = (function () {
             const result = Reflect.get(target, key, receiver);
             if (!isReadonly) {
                 // 收集依赖，等数据变化后更新视图
-                track(target, 0 /* GET */, key);
+                track(target, 0 /* TrackOpTypes.GET */, key);
             }
             if (isShallow) {
                 return result;
             }
-            if (isObject(result)) { // vue2一上来就递归遍历，vue3则是取值的时候进行代理
+            if (isObject(result)) { // *vue2一上来就递归遍历，vue3则是取值的时候进行代理
                 return isReadonly ? readonly(result) : reactive(result);
             }
             return result;
@@ -149,10 +149,10 @@ var VueReactivity = (function () {
             // 数组情况下，数组key长度比数组原来长度大，则新增
             let hasKey = isArray(target) && isIntegerKey(key) ? Number(key) < target.length : hasOwn(target, key);
             if (hasKey) {
-                trigger(target, 1 /* SET */, key, value);
+                trigger(target, 1 /* TriggerOpTypes.SET */, key, value);
             }
             else {
-                trigger(target, 0 /* ADD */, key, value);
+                trigger(target, 0 /* TriggerOpTypes.ADD */, key, value);
             }
             return result;
         };
@@ -169,7 +169,7 @@ var VueReactivity = (function () {
         deleteProperty: (target, key) => {
             console.log(11);
             const result = Reflect.deleteProperty(target, key);
-            trigger(target, 1 /* SET */, key, '');
+            trigger(target, 1 /* TriggerOpTypes.SET */, key, '');
             return result;
         }
     };
@@ -254,14 +254,14 @@ var VueReactivity = (function () {
         }
         // 类的属性访问器 set get
         get value() {
-            track(this, 0 /* GET */, 'value');
+            track(this, 0 /* TrackOpTypes.GET */, 'value');
             return this._value;
         }
         set value(newValue) {
             if (hasChange(this.rawValue, newValue)) {
                 this.rawValue = newValue;
                 this._value = this.isShallow ? newValue : toReactive(newValue);
-                trigger(this, 1 /* SET */, 'value', newValue);
+                trigger(this, 1 /* TriggerOpTypes.SET */, 'value', newValue);
             }
         }
     }
@@ -272,10 +272,10 @@ var VueReactivity = (function () {
     /*
      * @Author: linbin
      * @Date: 2021-12-27 11:19:23
-     * @LastEditTime: 2022-01-02 12:57:47
+     * @LastEditTime: 2022-02-17 18:01:02
      * @LastEditors: linbin
      * @Description:
-     * @FilePath: /studyVue3/packages/reactivity/src/index.ts
+     * @FilePath: /study/studyVue3/packages/reactivity/src/index.ts
      */
     const reactivity = {
         reactive, shallowReactive, readonly, shallowReadOnly, effect,

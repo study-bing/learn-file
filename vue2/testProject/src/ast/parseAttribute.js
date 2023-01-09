@@ -1,12 +1,13 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-06 09:54:45
- * @LastEditTime: 2021-12-06 10:42:42
- * @LastEditors: linbin
+ * @LastEditTime: 2022-12-19 16:33:32
+ * @LastEditors: linBin
  * @Description:
- * @FilePath: /study/myVue/vue/ast/parseAttribute.js
+ * @FilePath: /learn-file/vue2/testProject/src/ast/parseAttribute.js
  */
 export default function parseAttribute(attrs) {
+    console.log('attrs', attrs)
 	let result = []
 	let isMatchQuot = false // 是否遇到引号
 	let breakpoint = 0
@@ -18,10 +19,12 @@ export default function parseAttribute(attrs) {
 			}
 			if (!isMatchQuot && element === ' ') {
 				const target = attrs.substring(breakpoint, i).trim()
+                console.log('target', target)
 				target && result.push(target)
 				breakpoint = i
 			}
 		}
+        console.log('result', result)
 		// 循环结束，还剩下最后一项属性
 		result.push(attrs.substring(breakpoint).trim())
 		// filter过滤空字符

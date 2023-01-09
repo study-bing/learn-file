@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-01-15 16:56:00
- * @LastEditTime: 2021-12-10 11:25:04
- * @LastEditors: linbin
+ * @LastEditTime: 2022-12-05 18:09:16
+ * @LastEditors: linBin
  * @Description:
- * @FilePath: /study/promise/test1.js
+ * @FilePath: /learn-file/practice/test1.js
  */
 // let MyPromise = require("./then")
 // let fs = require("fs")
@@ -81,7 +81,6 @@ let p1 = Promise.reject(
 		resolve('ok')
 	})
 )
-console.log(p1)
 p1.then(res => {
 	console.log(res, 11)
 })

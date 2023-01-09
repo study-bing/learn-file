@@ -1,7 +1,7 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-10 13:32:43
- * @LastEditTime: 2022-03-29 13:40:05
+ * @LastEditTime: 2022-12-05 18:29:26
  * @LastEditors: linBin
  * @Description: Promise
  * @FilePath: /learn-file/practice/myPromise.js
@@ -130,6 +130,8 @@ class Promise {
 	}
 	  //静态方法
       static all(promiseArr) {
+        if (!Array.isArray(promiseArr)) return reject(new Error('必须是数组'))
+        if (!promiseArr.length) return resolve([])
         let result = [];
         //声明一个计数器 每一个promise返回就加一
         let count = 0;
@@ -138,7 +140,7 @@ class Promise {
           //这里用 Promise.resolve包装一下 防止不是Promise类型传进来
             Promise.resolve(promiseArr[i]).then(
               (res) => {
-                //这里不能直接push数组  因为要控制顺序一一对应(感谢评论区指正)
+                //这里不能直接push数组  因为要控制顺序一一对应
                 result[i] = res;
                 count++;
                 //只有全部的promise执行成功之后才resolve出去

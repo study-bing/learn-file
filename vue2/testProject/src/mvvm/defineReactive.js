@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-02 15:03:39
- * @LastEditTime: 2021-12-06 09:49:59
- * @LastEditors: linbin
+ * @LastEditTime: 2022-12-23 17:32:30
+ * @LastEditors: linBin
  * @Description: defineReactive函数给对象进行数据劫持
- * @FilePath: /study/myVue/vue/mvvm/defineReactive.js
+ * @FilePath: /learn-file/vue2/testProject/src/mvvm/defineReactive.js
  */
 import Dep from './dep'
 import observe from './observe'

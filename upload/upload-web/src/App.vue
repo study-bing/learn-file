@@ -4,7 +4,7 @@ import * as SparkMD5 from "spark-md5"
 import { uploadFile, mergeChunks } from "./request"
 
 // 默认分块大小
-const DefualtChunkSize = 4 * 1024
+const DefaultChunkSize = 4 * 1024
 
 // 当前处理文件
 const currFile = ref({})
@@ -38,15 +38,15 @@ const uploadChunks = (fileHash) => {
     Promise.all(requests).then(() => {
         // 合并请求
         mergeChunks("/mergeChunks", {
-            size: DefualtChunkSize,
+            size: DefaultChunkSize,
             filename: currFile.value.name,
         })
     })
 }
 
 // 获取文件分块
-const getFileChunk = (file, chunkSize = DefualtChunkSize) => {
-    return new Promise((resovle) => {
+const getFileChunk = (file, chunkSize = DefaultChunkSize) => {
+    return new Promise((resolve) => {
         let blobSlice =
                 File.prototype.slice ||
                 File.prototype.mozSlice ||
@@ -55,27 +55,17 @@ const getFileChunk = (file, chunkSize = DefualtChunkSize) => {
             currentChunk = 0,
             spark = new SparkMD5.ArrayBuffer(),
             fileReader = new FileReader()
-        console.log("file.size", file.size)
-        console.log("chunks", chunks)
         fileReader.onload = function (e) {
-            console.log("read chunk nr", currentChunk + 1, "of")
-
             const chunk = e.target.result
-            console.log('chunk', chunk);
             spark.append(chunk)
-            console.log("spark", spark)
-
             currentChunk++
-
             if (currentChunk < chunks) {
                 loadNext()
             } else {
                 let fileHash = spark.end()
-                console.info("finished computed hash", fileHash)
-                resovle({ fileHash })
+                resolve({ fileHash })
             }
         }
-
         fileReader.onerror = function () {
             console.warn("oops, something went wrong.")
         }
@@ -92,7 +82,6 @@ const getFileChunk = (file, chunkSize = DefualtChunkSize) => {
                 size: chunk.size,
                 name: currFile.value.name,
             })
-            console.log('chunk2', chunk);
             fileReader.readAsArrayBuffer(chunk)
         }
 

@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-08-23 11:47:33
- * @LastEditTime: 2022-01-05 10:53:12
- * @LastEditors: linbin
+ * @LastEditTime: 2023-01-03 15:28:43
+ * @LastEditors: linBin
  * @Description:
- * @FilePath: /study/vDom/src/mysnabbdom/patchVnode.js
+ * @FilePath: /learn-file/vue2/vDom/src/mysnabbdom/patchVnode.js
  */
 // patchVnode.js
 import createElement from "./createElement"
@@ -35,8 +35,8 @@ export default function patchVnode(oldVnode, newVnode) {
             oldVnode.elm.innerText = ""
             // 遍历新的vnode的子节点，创建dom，上树
             for (let i = 0; i < newVnode.children.length; i++) {
-              const dom = createElement(newVnode.children[i])
-              oldVnode.elm.appendChild(dom)
+                const dom = createElement(newVnode.children[i])
+                oldVnode.elm.appendChild(dom)
             }
             // oldVnode.elm.appendChild(createElement(newVnode))
         }

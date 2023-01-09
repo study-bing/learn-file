@@ -1,7 +1,7 @@
 /*
  * @Author: linBin
  * @Date: 2022-03-28 17:23:52
- * @LastEditTime: 2022-03-28 17:48:37
+ * @LastEditTime: 2022-12-08 19:50:08
  * @LastEditors: linBin
  * @Description: file content
  * @FilePath: /learn-file/practice/对象转树.js
@@ -69,7 +69,7 @@ const level = ["province", "city", "name"]
 //      ]
 //     },
 //    ]
-function transfrom(list, level) {
+function transform(list, level) {
     const res = []
     list.forEach((item) => {
         pushItem(res, item, 0)
@@ -100,4 +100,4 @@ function transfrom(list, level) {
     }
 }
 
-transfrom(entries, level)
+transform(entries, level)
