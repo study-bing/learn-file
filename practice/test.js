@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-02-27 16:47:43
- * @LastEditTime: 2022-02-24 15:59:27
- * @LastEditors: linbin
+ * @LastEditTime: 2023-03-02 19:58:29
+ * @LastEditors: linBin
  * @Description:
- * @FilePath: /study/test.js
+ * @FilePath: /learn-file/practice/test.js
  */
 // let a;
 // const b = new Promise((resolve, reject) => {
@@ -69,31 +69,31 @@
 
 // console.log(simplifiedFractions(4))
 let arr = [
-	{ id: 1, name: '部门1', pid: 0 },
-	{ id: 2, name: '部门2', pid: 1 },
-	{ id: 3, name: '部门3', pid: 1 },
-	{ id: 4, name: '部门4', pid: 3 },
-	{ id: 5, name: '部门5', pid: 4 }
+    { id: 1, name: "部门1", pid: 0 },
+    { id: 2, name: "部门2", pid: 1 },
+    { id: 3, name: "部门3", pid: 1 },
+    { id: 4, name: "部门4", pid: 3 },
+    { id: 5, name: "部门5", pid: 4 },
 ]
 /**
  * 递归查找，获取children
  */
 const getChildren = (data, result, pid) => {
-	for (const item of data) {
-		if (item.pid === pid) {
-			const newItem = { ...item, children: [] }
-			result.push(newItem)
-			getChildren(data, newItem.children, item.id)
-		}
-	}
+    for (const item of data) {
+        if (item.pid === pid) {
+            const newItem = { ...item, children: [] }
+            result.push(newItem)
+            getChildren(data, newItem.children, item.id)
+        }
+    }
 }
 
 /**
  * 转换方法
  */
 const arrayToTree = (data, pid) => {
-	const result = []
-	getChildren(data, result, pid)
-	return result
+    const result = []
+    getChildren(data, result, pid)
+    return result
 }
 console.dir(arrayToTree(arr, 0))
