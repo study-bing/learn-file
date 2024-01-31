@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: unset;
+                padding: unset;
+                box-sizing: border-box;
+            }
+            html {
+                cursor: none;
+            }
+            .arrow {
+                width: 50px;
+                height: 50px;
+                position: fixed;
+                left: -25px;
+                z-index: 999;
+                pointer-events: none;
+            }
+
+            .img-ul {
+                position: relative;
+                padding: 20px;
+                width: 100%;
+                justify-content: center;
+                height: 200px;
+                overflow: hidden;
+                img {
+                    position: absolute;
+                    left: 50%;
+                    transform: translate(-50%);
+                    width: 200px;
+                    height: 100%;
+                    flex-shrink: 0;
+                    transition: all 0.5s;
+                }
+            }
+            .left-btn,
+            .right-btn {
+                transform: translateY(-50%);
+                width: 100px;
+                height: 100px;
+                background-color: rgba(0, 0, 0, 0.5);
+                color: #fff;
+                text-align: center;
+                line-height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 自定义鼠标 -->
+        <img src="./img/arrow.jpg" class="arrow" alt="" />
+        <!-- 轮播图 -->
+        <div class="img-ul">
+            <img src="./img/order-1.webp" data-index="0" alt="" />
+            <img src="./img/order-2.webp" data-index="1" alt="" />
+            <img src="./img/order-3.webp" data-index="2" alt="" />
+            <img src="./img/order-4.webp" data-index="3" alt="" />
+            <img src="./img/trash.webp" data-index="4" alt="" />
+            <img src="./img/1.png" data-index="5" alt="" />
+            <img src="./img/2.png" data-index="6" alt="" />
+            <img src="./img/3.png" data-index="7" alt="" />
+            <img src="./img/4.png" data-index="8" alt="" />
+            <img src="./img/5.png" data-index="9" alt="" />
+            <!-- 点击向右 -->
+        </div>
+        <div class="left-btn">向左</div>
+        <div class="right-btn">向右</div>
+        <script>
+            const arrow = document.querySelector(".arrow")
+            let angle
+            window.addEventListener("mousemove", (e) => {
+                if (Math.abs(e.movementX) + Math.abs(e.movementY) > 3) {
+                    angle = Math.atan2(e.movementX, -e.movementY)
+                    // 计算x轴和y轴的移动距离，然后计算出鼠标的角度
+                }
+                // 计算出鼠标的角度
+                arrow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) rotate(${angle}rad)`
+            })
+
+            // 轮播图
+            const imgUl = document.querySelector(".img-ul")
+            const imgs = document.querySelectorAll(".img-ul img")
+            let index = 0
+            function layout() {
+                for (let i = 0; i < imgs.length; i++) {
+                    let opacity = Math.pow(0.5, Math.abs(i - index))
+                    let size = Math.pow(0.7, Math.abs(i - index))
+                    let zIndex = imgs.length - Math.abs(i - index)
+                    // 倾斜角度
+                    let rotate = 45 * Math.sign(i - index)
+                    imgs[i].style.transform = `translateX(${
+                        (i - index) * 200
+                    }px) scale(${size}) rotateY(${rotate}deg)`
+                    imgs[i].style.opacity = opacity
+                    imgs[i].style.zIndex = zIndex
+                }
+            }
+            layout()
+            // 点击向右
+            document
+                .querySelector(".right-btn")
+                .addEventListener("click", () => {
+                    console.log(1)
+                    if (index === imgs.length - 1) {
+                        index = 0
+                    } else {
+                        index++
+                    }
+                    layout()
+                })
+            // 点击向左
+            document
+                .querySelector(".left-btn")
+                .addEventListener("click", () => {
+                    if (index === 0) {
+                        index = imgs.length - 1
+                    } else {
+                        index--
+                    }
+                    layout()
+                })
+        </script>
+    </body>
+</html>

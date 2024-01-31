@@ -1,16 +1,17 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-07 09:40:02
- * @LastEditTime: 2021-12-07 09:45:35
- * @LastEditors: linbin
+ * @LastEditTime: 2023-04-14 15:09:44
+ * @LastEditors: linBin
  * @Description: 模拟call
- * @FilePath: /study/练习/my_call.js
+ * @FilePath: /learn-file/practice/my_call.js
  */
 Function.prototype.myCall = function (context, ...args) {
+    let fn = Symbol()
     context = context || globalThis
-	context.fn = this
-	let result = context.fn(...args)
-	Reflect.deleteProperty(context, 'fn')
+	context[fn] = this
+	let result = context[fn](...args)
+	Reflect.deleteProperty(context, fn)
 	return result
 }
 const testobj = {

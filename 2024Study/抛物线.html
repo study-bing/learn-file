@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: unset;
+                padding: unset;
+                box-sizing: border-box;
+            }
+            .reset,
+            .change-btn {
+                padding: 10px;
+                background-color: #ccc;
+                text-align: center;
+                line-height: 50px;
+                cursor: pointer;
+                display: inline-block;
+            }
+            .ball-box {
+                transition: all 1s;
+                position: relative;
+            }
+            .ball {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: red;
+                position: absolute;
+                left: 0;
+                transition: all 1s cubic-bezier(0.36, -0.65, 0.37, 0.68);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="change-btn">点击实现抛物线效果</div>
+        <div class="reset">重置</div>
+        <div class="ball-box">
+            <div class="ball"></div>
+        </div>
+        <script>
+            const changeBtn = document.querySelector(".change-btn")
+            const ball = document.querySelector(".ball")
+            const ballBox = document.querySelector(".ball-box")
+            changeBtn.addEventListener("click", () => {
+                ballBox.style.transform = "translateX(200px)"
+                ball.style.transform = "translateY(200px)"
+            })
+            const reset = document.querySelector(".reset")
+            reset.addEventListener("click", () => {
+                ballBox.style.transform = "translateX(0)"
+                ball.style.transform = "translateY(0)"
+            })
+        </script>
+    </body>
+</html>

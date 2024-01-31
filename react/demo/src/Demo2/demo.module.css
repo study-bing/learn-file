@@ -1,0 +1,10 @@
+.box .abc {
+    color: blue;
+}
+.abc {
+    color: red;
+}
+.test {
+    composes: abc;
+    font-size: 22px;
+}

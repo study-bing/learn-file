@@ -1,99 +1,117 @@
-/*
- * @Author: linbin
- * @Date: 2021-02-27 16:47:43
- * @LastEditTime: 2023-03-02 19:58:29
- * @LastEditors: linBin
- * @Description:
- * @FilePath: /learn-file/practice/test.js
- */
-// let a;
-// const b = new Promise((resolve, reject) => {
-// console.log('promise1');
-// resolve();
-// console.log('promise2');
-// }).then(() => {
-// console.log('promise3');
-// }).then(() => {
-// console.log('promise4');
-// })
-// a = new Promise(async(resolve, reject) => {
-// console.log(a);
-// await b;
-// console.log(a);
-// });
-// let c = new Promise((resolve, reject) => {
-// console.log('promise5');
-// resolve();
-// }).then(() => {
-// console.log('promise6');
-// })
-// console.log('end');
-
-// let abc = {
-//     name: '123',
-//     c: function () {
-//         console.log(this.name)
-//         return function () {
-//             console.log(this)
-//         }
-//     },
-// }
-// let name = '12332'
-// let bbb = abc.c()
-// console.log(abc.c()())
-// const gcd = (a, b) => {
-//     if (b === 0) {
-//         return a;
-//     }
-//     return gcd(b, a % b);
-// }
-// var simplifiedFractions = function (n) {
-// 	if (n === 1) {
-// 		return []
-// 	}
-// 	let result = []
-// 	let i = 1
-// 	let j
-// 	while (i < n) {
-// 		j = i + 1
-// 		while (j <= n) {
-// 			if (gcd(i,j) === 1) {
-// 				result.push(i/j)
-// 			}
-// 			j++
-// 		}
-// 		i++
-// 	}
-// 	return result
-// }
-
-// console.log(simplifiedFractions(4))
-let arr = [
-    { id: 1, name: "部门1", pid: 0 },
-    { id: 2, name: "部门2", pid: 1 },
-    { id: 3, name: "部门3", pid: 1 },
-    { id: 4, name: "部门4", pid: 3 },
-    { id: 5, name: "部门5", pid: 4 },
-]
-/**
- * 递归查找，获取children
- */
-const getChildren = (data, result, pid) => {
-    for (const item of data) {
-        if (item.pid === pid) {
-            const newItem = { ...item, children: [] }
-            result.push(newItem)
-            getChildren(data, newItem.children, item.id)
+// 获取当前时间
+var now = new Date();
+// 获取当前时间的年份
+var year = now.getFullYear();
+// 获取当前时间的月份
+var month = now.getMonth() + 1;
+// 获取当前时间的日期
+var date = now.getDate();
+// 获取当前时间的小时
+var hour = now.getHours();
+// 获取当前时间的分钟
+var minute = now.getMinutes();
+// 获取当前时间的秒数
+var second = now.getSeconds();
+// 获取当前时间的毫秒数
+var millisecond = now.getMilliseconds();
+// 获取当前时间的星期
+var week = now.getDay();
+// 获取当前时间的时间戳
+var time = now.getTime();
+// 获取本地地址
+var local = now.toLocaleString();
+// 获取本地日期
+var localDate = now.toLocaleDateString();
+// 校验是否是数组
+var isArray = Array.isArray([1, 2, 3]);
+// 一个判断是否为空的方法
+var isEmpty = function (value) {
+    return value === null || value === undefined || value === '';
+}
+// 传入时间戳得到时分秒
+var formatTime = function (time) { 
+    var hour = Math.floor(time / 3600);
+    var minute = Math.floor((time - hour * 3600) / 60);
+    var second = time - hour * 3600 - minute * 60;
+    return [hour, minute, second].map(formatNumber).join(':');
+}
+// 深拷贝
+var deepClone = function (obj) {
+    var result = Array.isArray(obj) ? [] : {};
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            if (typeof obj[key] === 'object') {
+                result[key] = deepClone(obj[key]);   //递归复制
+            } else {
+                result[key] = obj[key];
+            }
         }
     }
+    return result;
 }
-
-/**
- * 转换方法
- */
-const arrayToTree = (data, pid) => {
-    const result = []
-    getChildren(data, result, pid)
-    return result
+// 浅拷贝
+var shallowClone = function (obj) {
+    if (typeof obj !== 'object') return;
+    var newObj = obj instanceof Array ? [] : {};
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            newObj[key] = obj[key];
+        }
+    }
+    return newObj;
 }
-console.dir(arrayToTree(arr, 0))
+// 用performanceObserver监听页面性能
+var performanceObserver = function () {
+    var observer = new PerformanceObserver(function (list) {
+        var perfEntries = list.getEntries();
+        for (var i = 0; i < perfEntries.length; i++) {
+            // 这里可以获取页面性能的数据
+            console.log(perfEntries[i]);
+        }
+    });
+    observer.observe({ entryTypes: ['navigation'] });
+}
+// 用performanceObserver监听页面FMP
+var performanceObserverFMP = function () {
+    var observer = new PerformanceObserver(function (list) {
+        var perfEntries = list.getEntries();
+        for (var i = 0; i < perfEntries.length; i++) {
+            // 这里可以获取页面性能的数据
+            console.log(perfEntries[i]);
+        }
+    });
+    observer.observe({ entryTypes: ['paint'] });
+}
+// 用performanceObserver监听页面LCP
+var performanceObserverLCP = function () {
+    var observer = new PerformanceObserver(function (list) {
+        var perfEntries = list.getEntries();
+        for (var i = 0; i < perfEntries.length; i++) {
+            // 这里可以获取页面性能的数据
+            console.log(perfEntries[i]);
+        }
+    });
+    observer.observe({ entryTypes: ['largest-contentful-paint'] });
+}
+// 用performanceObserver监听页面TTI
+var performanceObserverTTI = function () {
+    var observer = new PerformanceObserver(function (list) {
+        var perfEntries = list.getEntries();
+        for (var i = 0; i < perfEntries.length; i++) {
+            // 这里可以获取页面性能的数据
+            console.log(perfEntries[i]);
+        }
+    });
+    observer.observe({ entryTypes: ['first-input'] });
+}
+// 用performanceObserver监听页面ondomcontentloaded
+var performanceObserverondomcontentloaded = function () {
+    var observer = new PerformanceObserver(function (list) {
+        var perfEntries = list.getEntries();
+        for (var i = 0; i < perfEntries.length; i++) {
+            // 这里可以获取页面性能的数据
+            console.log(perfEntries[i]);
+        }
+    });
+    observer.observe({ entryTypes: ['navigation'] });
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <button>按钮</button>
+        <script>
+            function getElement(cssSelector) {
+                const dom = document.querySelector(cssSelector)
+                const proxy = new Proxy(dom, {
+                    get(target, property) {
+                        if (property === "waitClick") {
+                            return new Promise((resolve) => {
+                                target.addEventListener("click", resolve, {
+                                    once: true,
+                                })
+                            })
+                        }
+                        return target[property]
+                    },
+                })
+                return proxy
+            }
+            ;(async function () {
+                let button = getElement("button")
+                let n = 1
+                while (n < 10) {
+                    n += 1
+                    console.log(button.waitClick)
+                    await button.waitClick
+                    console.log("点击了按钮")
+                }
+            })()
+        </script>
+    </body>
+</html>

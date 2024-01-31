@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .box {
+                width: 400px;
+                background-color: #000;
+                margin: auto;
+                position: relative;
+                color: #fff;
+            }
+            .box-show{
+                position: absolute;
+                inset: 0;
+                color: #fff;
+            }
+            /* 定义一个变量为属性 */
+            @property --op{
+                syntax: '<percentage>';
+                inherits: false;
+                initial-value: 0%;
+            }
+            .box-show span{
+                --op: 10%;
+                background: linear-gradient(to right, #0000 var(--op), #000  calc(var(--op) + 30px));
+                color: transparent;
+                animation: showTxt 5s  linear forwards;
+            }
+            @keyframes showTxt {
+                100% {
+                    --op: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+            功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+            功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+            功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+            功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+            <div class="box-show">
+                <span
+                    >功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+                    功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+                    功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+                    功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他
+                    功能类型，属性根据功能定义中的属性类型（设备状态、安全监测、其他），显示为“属性：设备状态”、“属性：安全监测”和“属性：其他</span
+                >
+            </div>
+        </body>
+        </div>
+       
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script>
+            const domain = [
+                "http://wwww",
+                "http://ssss",
+                "file:///Users/linbin/learn-file/practice/js加载失败解决方案",
+            ]
+            let maxRetry = 3
+            let retryInfo = {}
+            window.addEventListener(
+                "error",
+                (e) => {
+                    let tag = e.target
+                    if (
+                        tag.tagName === "SCRIPT" &&
+                        !(e instanceof ErrorEvent)
+                    ) {
+                        let src = new URL(tag.src)
+                        if (retryInfo[src.pathname]) {
+                            retryInfo[src.pathname].index++
+                        } else {
+                            retryInfo[src.pathname] = {
+                                index: 0,
+                                src: src,
+                            }
+                        }
+                        if (retryInfo[src.pathname].index > maxRetry) {
+                            return
+                        }
+                        // !顺序不对
+                        // let script = document.createElement("script")
+                        // script.src = `${domain[retryInfo[src.pathname].index]}${
+                        //     src.pathname
+                        // }`
+                        // document.body.insertBefore(script, tag)
+                        // document.write 会阻塞加载 所以可以用来解决顺序问题
+                        document.write(
+                            `<script src="${
+                                domain[retryInfo[src.pathname].index]
+                            }${src.pathname}">\<\/script>`
+                        )
+                    }
+                },
+                true
+            )
+        </script>
+    </head>
+    <body>
+        <script src="./1.js"></script>
+        <!-- <script src="file:///Users/linbin/learn-file/practice/js加载失败解决方案/2.js"></script> -->
+        <script src="http://asdasd/2.js"></script>
+        <script src="./3.js"></script>
+    </body>
+</html>

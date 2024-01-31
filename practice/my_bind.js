@@ -1,10 +1,10 @@
 /*
  * @Author: linbin
  * @Date: 2021-12-07 09:46:45
- * @LastEditTime: 2021-12-07 09:54:35
- * @LastEditors: linbin
+ * @LastEditTime: 2024-01-26 09:32:08
+ * @LastEditors: linBin
  * @Description:
- * @FilePath: /study/练习/my_bind.js
+ * @FilePath: /learn-file/practice/my_bind.js
  */
 Function.prototype.my_apply = function (context, args) {
 	context = context || globalThis
@@ -15,8 +15,10 @@ Function.prototype.my_apply = function (context, args) {
 }
 Function.prototype.myBind = function (context, ...args) {
 	let fn = this
+    if(new.target){
+        return new fn(...args, ...arg2)
+    }
 	return function (...arg2) {
-        console.log([...args, ...arg2]);
 		return fn.my_apply(context, [...args, ...arg2])
 	}
 }

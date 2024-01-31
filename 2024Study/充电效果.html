@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            .content {
+                height: 100vh;
+                width: 100vw;
+                background-color: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .show-box {
+                background-color: black;
+                position: relative;
+                filter: contrast(30) hue-rotate(0);
+                animation: changeColor 10s linear infinite;
+            }
+            .round {
+                position: relative;
+                width: 160px;
+                height: 160px;
+                border-radius: 40% 43% 42% 49%;
+                background-color: blue;
+                animation: roundChange 2s linear infinite;
+                filter: blur(8px);
+            }
+            .round::after {
+                content: "";
+                position: absolute;
+                inset: 10px;
+                background-color: #333;
+                border-radius: 50%;
+            }
+            .txt {
+                position: absolute;
+                top: 80px;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 20px;
+                color: #fff;
+                z-index: 999;
+            }
+            @keyframes roundChange {
+                0% {
+                    transform: rotate(0deg);
+                }
+                50% {
+                    transform: rotate(180deg);
+                }
+                100% {
+                    filter: hue-rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+            .bottom {
+                width: 150px;
+                height: 30px;
+                background-color: blue;
+                border-radius: 50%;
+                margin-top: 100px;
+                display: flex;
+            }
+            .li {
+                --delay: 0s;
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                background-color: blue;
+                border-radius: 50%;
+                bottom: 6px;
+                left: 40px;
+                filter: blur(5px);
+                animation: moveBall 2s linear var(--delay) infinite;
+            }
+            .li:nth-child(2) {
+                --delay: 0.2s;
+                left: 90px;
+            }
+            .li:nth-child(3) {
+                --delay: 0.1s;
+                left: 50px;
+            }
+            .li:nth-child(4) {
+                --delay: 0.6s;
+                left: 80px;
+            }
+            .li:nth-child(5) {
+                --delay: 0.4s;
+                left: 70px;
+            }
+            .li:nth-child(6) {
+                --delay: 1.6s;
+                left: 60px;
+            }
+            @keyframes moveBall {
+                0% {
+                    transform: translateY(0);
+                }
+                100% {
+                    transform: translateY(-110px);
+                }
+            }
+            @keyframes changeColor {
+                100% {
+                    filter: contrast(10) hue-rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <div class="show-box">
+                <div class="round"></div>
+                <div class="txt">99.99%</div>
+                <div class="li"></div>
+                <div class="li"></div>
+                <div class="li"></div>
+                <div class="li"></div>
+                <div class="li"></div>
+                <div class="li"></div>
+                <div class="bottom"></div>
+            </div>
+        </div>
+        <script>
+        </script>
+    </body>
+</html>

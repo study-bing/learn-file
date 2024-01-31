@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: unset;
+                padding: unset;
+                box-sizing: border-box;
+            }
+            .ball {
+                width: 100px;
+                height: 100px;
+                background-color: red;
+                /* clip-path: circle(50% at 50% 0); */
+                clip-path: polygon(0 0, 0% 100%, 100% 100%);
+                border-radius: 50%;
+            }
+            .moveBall {
+                --delay: 2s;
+                width: 100px;
+                height: 100px;
+                background-color: red;
+                /* clip-path: circle(50% at 50% 0); */
+                border-radius: 50%;
+                animation: move 2s forwards var(--delay) paused;
+                position: absolute;
+                left: 0;
+            }
+            @keyframes move {
+                0% {
+                    left: 0;
+                    top: 0;
+                }
+                50% {
+                    top: 200px;
+                    left: 200px;
+                }
+                100% {
+                    top: 0;
+                    left: 400px;
+                }
+            }
+            .range {
+                width: 400px;
+                margin: 20px auto;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 显示裁剪效果 -->
+        <div class="ball"></div>
+        <input type="range" class="range" value="0" />
+        <div class="moveBall"></div>
+        <script>
+            const range = document.querySelector(".range")
+            const moveBall = document.querySelector(".moveBall")
+            range.addEventListener("input", () => {
+                const value = range.value
+                moveBall.style.setProperty("--delay", `-${value * 0.02}s`)
+            })
+        </script>
+    </body>
+</html>

@@ -1,6 +1,6 @@
 // ! https://juejin.cn/post/7198506378432184377
 function test() {
-    let arr = [2, 4, 5, 3, 1, 9, 7, 8]
+    let arr = [2, 4, 5, 3, 1, 9, 7, 8, 0]
     let list = [0] // 存放位置,主要是用来计算长度的
     let record = [] // 存放上一个比当前值小的数所在的位置(可以理解为存放list中比当前值小的上一位数，因为list记录的是位置)
     for (let i = 0; i < arr.length; i++) {

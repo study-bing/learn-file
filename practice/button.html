@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .content {
+                width: 100%;
+                height: 100vh;
+                background-color: #383434;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .btn {
+                position: relative;
+                z-index: 9;
+                width: 120px;
+                height: 60px;
+                background-color: #383434;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                color: rgb(221, 235, 227);
+            }
+            .btn::after{
+                content: '';
+                position: absolute;
+                width: 116px;
+                height: 56px;
+                background-color: #383434;
+                border-radius: 10px;
+                top: 2px;
+                left: 2px;
+                z-index: -1;
+            }
+            .move-box {
+                background-color: blue;
+                width: 200%;
+                height: 200%;
+                position: absolute;
+                transition: all 0.3s;
+                animation: rotateBox 2s linear infinite;
+                z-index: -2;
+                left: 50%;
+                transform-origin: left top;
+                top: 50%;
+            }
+            @keyframes rotateBox {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <!-- 底部有一个盒子在旋转，再用after伪元素这种中间露出间距显示颜色 -->
+            <div class="btn">
+                按钮
+                <div class="move-box"></div>
+            </div>
+        </div>
+    </body>
+</html>

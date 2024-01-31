@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="aaa">123</div>
+        <script>
+            var aaa = document.getElementById("aaa")
+            console.log(MutationObserver)
+            var obj = new MutationObserver(function (e) {
+                console.log(e, 123123123)
+            })
+            var textNode = document.createTextNode("123")
+
+            obj.observe(aaa, {
+                characterData: true,
+                subtree: true,
+                childList: true,
+            })
+            textNode.data = "345"
+            console.log(999)
+            aaa.textContent = "456"
+            console.log(888)
+        </script>
+    </body>
+</html>
